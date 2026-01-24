@@ -21,8 +21,6 @@ target = "Personality"
 X = data.drop([target], axis=1)
 Y = data[target]
 
-print(X.shape)
-print(Y.shape)
 # Train Test Split
 X_train, X_test, y_train, y_test = train_test_split(
     X, Y, test_size=0.2, random_state=42
@@ -32,7 +30,7 @@ num_features = X.select_dtypes(exclude=["object"]).columns
 cat_features = X.select_dtypes(include=["object"]).columns
 
 
-#Creating Numerical and Categorical Pipeline
+# Creating Numerical and Categorical Pipeline
 cat_pipe = Pipeline(
     [
         ("imputing", SimpleImputer(strategy="most_frequent")),
@@ -45,7 +43,7 @@ num_pipe = Pipeline(
         ("scaling", StandardScaler()),
     ]
 )
-
+# Creating The actual Column Transformer
 transformer = ColumnTransformer(
     [
         ("cat_pipe", cat_pipe, cat_features),
@@ -53,4 +51,30 @@ transformer = ColumnTransformer(
     ]
 )
 
+# Model Creation
+rf_model = RandomForestClassifier(
+    n_estimators=150,
+    criterion="gini",
+    max_depth=10,
+    random_state=42,
+)
+# Actual Pipeline of the Model
+rf_pipe = Pipeline(
+    [
+        ("Transformer", transformer),
+        ("Model", rf_model),
+    ]
+)
 
+# Model Training
+rf_pipe.fit(X_train, y_train)
+
+# Predicting on the test Set
+y_predict = rf_pipe.predict(X_test)
+
+# Metrices Calculation
+accuracy = accuracy_score(y_test, y_predict)
+report = classification_report(y_test, y_predict)
+
+print("Accuracy Score:", accuracy)
+print("Classification Report:", report)
