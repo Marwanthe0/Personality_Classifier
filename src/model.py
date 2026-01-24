@@ -11,10 +11,10 @@ from sklearn.impute import SimpleImputer
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import accuracy_score, recall_score, classification_report
+from sklearn.metrics import accuracy_score, classification_report
 
 # Importing Dataset
-data = pd.read_csv("Personality_Test_Project\data\personality_dataset.csv")
+data = pd.read_csv("personality_dataset.csv")
 # Defining Target Variable
 target = "Personality"
 # Defining Features and target column
@@ -34,7 +34,7 @@ cat_features = X.select_dtypes(include=["object"]).columns
 cat_pipe = Pipeline(
     [
         ("imputing", SimpleImputer(strategy="most_frequent")),
-        ("encoding", OneHotEncoder()),
+        ("encoding", OneHotEncoder(handle_unknown="ignore")),
     ]
 )
 num_pipe = Pipeline(
@@ -78,8 +78,8 @@ report = classification_report(y_test, y_predict)
 print("Accuracy Score:", accuracy)
 print("Classification Report:", report)
 
-#Saving the model using pickle file
+# Saving the model using pickle file
 with open("RF_Model.pkl", "wb") as file:
-    pickle.dump(rf_model,file)
+    pickle.dump(rf_pipe, file)
 
 print("🎉Model is saved Successfully.✅")
