@@ -4,7 +4,7 @@ import pandas as pd
 import pickle
 
 # Importing Necessary Models for ML
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
@@ -52,12 +52,8 @@ transformer = ColumnTransformer(
 )
 
 # Model Creation
-rf_model = RandomForestClassifier(
-    n_estimators=150,
-    criterion="gini",
-    max_depth=10,
-    random_state=42,
-)
+rf_model = RandomForestClassifier(random_state=42)
+
 # Actual Pipeline of the Model
 rf_pipe = Pipeline(
     [
@@ -66,11 +62,35 @@ rf_pipe = Pipeline(
     ]
 )
 
-# Model Training
-rf_pipe.fit(X_train, y_train)
+# Defining parameters for Gridsearchcv
+param_grid = {
+    'Model__n_estimators': [50, 100, 150, 200],
+    'Model__max_depth': [None, 10, 20, 30],
+    'Model__min_samples_split': [2, 5, 10],
+    'Model__criterion': ['gini', 'entropy']
+}
 
-# Predicting on the test Set
-y_predict = rf_pipe.predict(X_test)
+# Create GridSearchCV
+grid_search = GridSearchCV(
+    estimator=rf_pipe,
+    param_grid=param_grid,
+    cv=5,
+    scoring='accuracy',
+    n_jobs=-1,
+)
+
+# Model Training
+grid_search.fit(X_train, y_train)
+
+# Getting the best model
+best_rf_pipe = grid_search.best_estimator_
+
+# Printing best parameters
+print("Best Parameters:", grid_search.best_params_)
+print("Best Cross-Validation Score:", grid_search.best_score_)
+
+# Predicting
+y_predict = best_rf_pipe.predict(X_test)
 
 # Metrices Calculation and printing
 accuracy = accuracy_score(y_test, y_predict)
@@ -80,6 +100,6 @@ print("Classification Report:", report)
 
 # Saving the model using pickle file
 with open("RF_Model.pkl", "wb") as file:
-    pickle.dump(rf_pipe, file)
+    pickle.dump(best_rf_pipe, file)
 
 print("🎉Model is saved Successfully.✅")
