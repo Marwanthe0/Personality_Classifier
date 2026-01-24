@@ -72,9 +72,14 @@ rf_pipe.fit(X_train, y_train)
 # Predicting on the test Set
 y_predict = rf_pipe.predict(X_test)
 
-# Metrices Calculation
+# Metrices Calculation and printing
 accuracy = accuracy_score(y_test, y_predict)
 report = classification_report(y_test, y_predict)
-
 print("Accuracy Score:", accuracy)
 print("Classification Report:", report)
+
+#Saving the model using pickle file
+with open("RF_Model.pkl", "wb") as file:
+    pickle.dump(rf_model,file)
+
+print("🎉Model is saved Successfully.✅")
