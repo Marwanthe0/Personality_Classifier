@@ -1,9 +1,12 @@
 # Personality Test Project
 
 A machine learning application that predicts whether a person is an Introvert or Extrovert based on their social behavior data.
-##Live Demo
-Try it on Hugging Face:
-https://huggingface.co/spaces/marwanthe0/Personality_Classifier
+## Live Demo
+
+Try the deployed app directly on Hugging Face Spaces:
+
+[Personality Classifier](https://huggingface.co/spaces/marwanthe0/Personality_Classifier)
+
 ## Features
 
 - Predict personality type using a trained Random Forest model
