@@ -1,127 +1,85 @@
-# Personality Test Project
+<div align="center">
 
-A machine learning application that predicts whether a person is an Introvert or Extrovert based on their social behavior data.
-## Live Demo
+# 🧠 Personality Classifier
 
-Try the deployed app directly on Hugging Face Spaces:
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Gradio](https://img.shields.io/badge/Gradio-App-FF6B6B?style=for-the-badge&logo=gradio)](https://gradio.app)
+[![scikit-learn](https://img.shields.io/badge/Accuracy-92.93%25-success?style=for-the-badge)](https://scikit-learn.org)
+[![HuggingFace](https://img.shields.io/badge/🤗-Live%20Demo-FFD21E?style=for-the-badge)](https://huggingface.co/spaces/marwanthe0/Personality_Classifier)
 
-[Personality Classifier](https://huggingface.co/spaces/marwanthe0/Personality_Classifier)
+**Predicts whether you are an Introvert or Extrovert based on 7 social behavior features — with 92.93% test accuracy.**
 
-## Features
+[🚀 Try Live Demo](https://huggingface.co/spaces/marwanthe0/Personality_Classifier) · [📖 Report Bug](https://github.com/Marwanthe0/Personality_Classifier/issues)
 
-- Predict personality type using a trained Random Forest model
-- Interactive web interface built with Gradio
-- Data preprocessing and model training pipeline
+</div>
 
-## Requirements
+---
 
-- Python 3.8+
-- See `requirements.txt` for exact dependency versions (Gradio, scikit-learn, pandas, etc.)
+## ✨ Features
 
-## Installation
+- Trained on a dataset of **2,900 records**
+- Uses **7 social behavior features** (time alone, social event frequency, etc.)
+- **92.93% test accuracy** with Random Forest + hyperparameter tuning
+- Deployed as a **Gradio app on Hugging Face Spaces**
+- Clean preprocessing pipeline with feature importance analysis
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Marwanthe0/Personality_Test_Classifier.git
-   cd Personality_Test_Classifier
-   ```
+---
 
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   # macOS / Linux
-   source venv/bin/activate
-   # Windows (PowerShell)
-   .\venv\Scripts\Activate.ps1
-   # Windows (cmd.exe)
-   venv\Scripts\activate
-   ```
+## 🔍 Input Features
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+| Feature | Type | Description |
+|---------|------|-------------|
+| Time Spent Alone | Numeric | Hours per day spent alone |
+| Social Event Frequency | Numeric | Events attended per month |
+| Going Outside Frequency | Numeric | Days per week outside |
+| Friends Circle Size | Numeric | Number of close friends |
+| Post Frequency on Social Media | Numeric | Posts per week |
+| Stage Fright | Binary | Yes / No |
+| Drained After Socializing | Binary | Yes / No |
 
-## Usage
+---
 
-1. Train the model (if not already trained):
-   ```bash
-   # from project root
-   python src/model.py
-   ```
-   - The script should save the trained model to a file (e.g., `models/model.pkl`). If it doesn't, check `src/model.py` and note the output path.
+## 🤖 Model Performance
 
-2. Run the application:
-   ```bash
-   python src/app.py
-   ```
-   - Gradio typically serves on http://localhost:7860 by default — check the console output for the exact URL.
+| Metric | Score |
+|--------|-------|
+| Test Accuracy | **92.93%** |
+| Algorithm | Random Forest |
+| Dataset Size | 2,900 records |
+| Train/Test Split | 80/20 |
 
-3. Open the provided URL in your browser to use the interface.
+---
 
-## Example
+## ⚙️ Running Locally
 
-- Provide a short example of inputs (or a screenshot) showing how to use the web UI or a sample CLI/API call. This helps users try the app quickly.
-
-## Project Structure
-
+```bash
+git clone https://github.com/Marwanthe0/Personality_Classifier.git
+cd Personality_Classifier
+pip install -r requirements.txt
+python app.py
 ```
-Personality_Test_Classifier/
-├── .gitignore
-├── LICENSE
+
+Or run the FastAPI backend:
+```bash
+uvicorn main:app --reload
+```
+
+---
+
+## 🗂️ Project Structure
+Personality_Classifier/
+│
+├── app.py                  # Gradio interface
+├── main.py                 # FastAPI backend
+├── model_training.py       # Training script
+├── personality_model.pkl   # Serialized model
+├── dataset.csv             # Training data
 ├── requirements.txt
-├── README.md
-└── src/
-    ├── app.py                   # Gradio web application
-    ├── model.py                 # Model training script
-    └── personality_dataset.csv  # Training dataset (consider moving to data/)
-    └── models/                  # recommended: store trained artifacts here (add to .gitignore)
-```
+└── README.md
+---
 
-Notes:
-- Consider moving large datasets to a `data/` directory and adding `data/` or `models/` to `.gitignore` if they are not meant to be committed.
-- If `src/model.py` writes a model file, include the path in the README.
+## 🙋 Author
 
-## Model Details
+**Shafikul Islam Marwan** · [LinkedIn](https://www.linkedin.com/in/marwanahmed27/) · [GitHub](https://github.com/Marwanthe0)
 
-- Algorithm: Random Forest Classifier
-- Features: time spent alone, stage fear, social event attendance, etc.
-- Target: Personality (Introvert / Extrovert)
-- Evaluation: add accuracy / precision / recall numbers and how they were computed (cross-validation, test split, etc.)
-
-## Contributing
-
-Please follow standard Python coding practices:
-- Open issues for bugs and feature requests
-- Submit PRs with clear descriptions and tests for new features
-- Use consistent formatting (e.g., Black / isort) and type hints where appropriate
-
-## Testing
-
-- Add a `tests/` folder and instructions on how to run tests (e.g., `pytest`).
-
-## License
-
-Licensed under the MIT License — see the top-level LICENSE file for details.
-
-MIT License
-
-Copyright (c) 2026 Marwanthe0
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+<div align="center">⭐ Star this repo if it helped you!</div>
